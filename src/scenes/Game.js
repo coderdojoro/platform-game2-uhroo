@@ -12,6 +12,7 @@ class Game extends Phaser.Scene {
     this.load.spritesheet('walk-spritesheet', 'assets/mage/walk.png', { frameWidth: 171, frameHeight: 128 });
     this.load.spritesheet('jump-spritesheet', 'assets/mage/jump.png', { frameWidth: 171, frameHeight: 128 });
     this.load.spritesheet('double-jump-spritesheet', 'assets/mage/double-jump.png', { frameWidth: 171, frameHeight: 128 });
+    this.load.spritesheet('fall-spritesheet', 'assets/mage/fall.png', { frameWidth: 171, frameHeight: 128 });
 
     this.load.tilemapTiledJSON('level1-tilemap', 'assets/tilemap.json');
     this.load.image('ground-image', 'assets/tiles/tiles.png ');
@@ -51,6 +52,12 @@ class Game extends Phaser.Scene {
       repeat: 0
     });
 
+    this.anims.create({
+      key: 'hero-fall',
+      frames: this.anims.generateFrameNumbers('fall-spritesheet', {}),
+      frameRate: 10,
+      repeat: 0
+    });
 
 
     let map = this.make.tilemap({ key: 'level1-tilemap' });

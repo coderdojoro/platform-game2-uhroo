@@ -2,7 +2,7 @@
 
 class Hero extends Phaser.GameObjects.Sprite {
 
-    class Hero extends Phaser.GameObjects.Sprite {
+
 
     keyLeft;
     keyRight;
@@ -68,15 +68,48 @@ class Hero extends Phaser.GameObjects.Sprite {
             this.heroState = 'jump';
         }
 
-        if (justDown && this.heroState == 'jump') {
+        if (justDown && (this.heroState == 'jump' || this.heroState == 'fall))' {
             this.body.setVelocityY(-400);
             this.heroState = 'double-jump';
         }
+
+        if (!this.body.onFloor() && this.body.velocity.y > 0 && this.heroState != 'jump' && this.heroState != 'double-jump' && this.heroState != 'fall'; {
+
+            this.heroState = 'fall';
+            this.body.setVelocityX(0);
+        }
+
+
+
+        if (this.heroState == 'jump' || this.heroState == 'double-jump') {
+            if (this.keyRight.isDown) {
+                this.setFlipX(false);
+                this.body.setAccelerationX(500);
+            }
+            if (this.keyLeft.isDown) {
+                this.setFlipX(true);
+                this.body.setAccelerationX(-500);
+            } else if (this.keyLeft.isDown) {
+                this.setFlipX(true);
+                this.body.setAccelerationX(-500);
+            } else {
+                this.body.setVelocityX(0);
+            }
+        }
+
+
 
         if (this.heroState == "idle" && this.animState != "idle") {
             this.anims.play('hero-idle');
             this.animState = "idle";
         }
+
+        if (this.heroState == 'fall' && this.animState != 'fall') {
+            this.anims.play('hero-fall');
+            this.animState = 'fall';
+        }
+
+
         if (this.heroState == "walk" && this.animState != "walk") {
             this.anims.play('hero-walk');
             this.animState = "walk";
